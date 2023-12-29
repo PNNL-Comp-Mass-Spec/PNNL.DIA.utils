@@ -11,7 +11,7 @@
 #' read_diann_tsv(x)
 read_diann_tsv <- function(path){
   
-  df <- data.table::fread(path) |>
+  df <- data.table::fread(path, stringsAsFactors = FALSE) |>
     as.data.frame()
   df
   
