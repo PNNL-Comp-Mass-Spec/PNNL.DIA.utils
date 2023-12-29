@@ -4,12 +4,12 @@
 \alias{pgmatrix_to_msnset}
 \title{Converts DIA-NN matrix report to msnset object}
 \usage{
-pgmatrix_to_msnset(path, fdata_rownames = "Protein.Group")
+pgmatrix_to_msnset(path, id_header = "Protein.Group")
 }
 \arguments{
 \item{path}{Filepath to DIA-NN protein or gene group output file}
 
-\item{fdata_rownames}{Which matrix column to be used in fData slot rowname}
+\item{id_header}{Which matrix column to be used in fData slot rowname}
 }
 \value{
 MSnSet object

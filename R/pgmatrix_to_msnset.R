@@ -3,7 +3,7 @@
 #' Converts DIA-NN matrix report to msnset object
 #'
 #' @param path Filepath to DIA-NN protein or gene group output file
-#' @param fdata_rownames Which matrix column to be used in fData slot rowname
+#' @param id_header Which matrix column to be used in fData slot rowname
 #'
 #' @return MSnSet object 
 #' @export
@@ -15,7 +15,7 @@
 #'    package = "pnnl.diann.utils")
 #'    
 #' pgmatrix_to_msnset(x)
-pgmatrix_to_msnset <- function(path, fdata_rownames = "Protein.Group"){
+pgmatrix_to_msnset <- function(path, id_header = "Protein.Group"){
   
   df <- read_diann_tsv(path)
   
@@ -29,7 +29,7 @@ pgmatrix_to_msnset <- function(path, fdata_rownames = "Protein.Group"){
   
   f_data <- df |>
     dplyr::select(dplyr::any_of(f_data_cols)) |>
-    tibble::column_to_rownames(var = fdata_rownames)
+    tibble::column_to_rownames(var = id_header)
   
   # exprs data 
   
