@@ -1,0 +1,85 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# pnnl.diann.utils
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of pnnl.diann.utils is 
+  1. A set of functions to analyze DIA-NN outputs and convert them to `MSnSet` objects for downstream analysis with [`MSnSet.utils`](https://github.com/PNNL-Comp-Mass-Spec/MSnSet.utils).
+  2. Assembling paths for analyzing files directly from DMS.
+  3. (in-progress) General workflow for *plexDIA* analysis. 
+
+## Installation
+
+You can install the development version of pnnl.diann.utils from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("PNNL-Comp-Mass-Spec/DIANN.utils")
+```
+
+## Example datasets
+
+Example gene group (*gg*) and protein group (*pg*) matrices, and precursors (*pq*) report are found in build`inst/extdata/`. 
+
+  - `diann_report.tsv` is example data from [`diann_rpackage`](https://github.com/vdemichev/diann-rpackage)
+  - `QC_Mam` matrices are from `\\proto-8\Lumos02\2023_4\QC_Mam_19_01_b_DIA_trap_60min_19Dec23_Pippin_WBEH-23-05-18\DNN202312200344_Auto2255735`
+
+
+
+## Converting Protein Groups Matrix to `MSnSet`
+
+
+```{r example, warning = FALSE, message = FALSE, error = FALSE}
+library(pnnl.diann.utils)
+
+
+pg_matrix_path <- system.file("extdata",
+                              "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv",
+                              package = "pnnl.diann.utils")
+
+
+pnnl.diann.utils::pgmatrix_to_msnset(pg_matrix_path)
+```
+## Assembling file paths from Data Package number
+
+While running DIA-NN from `kaiju` or other PNNL servers, DIA-NN can pull files directly from DMS, saving time and redundancy incurred from copying LC-MS files over with a minimal impact on overall DIA-NN analysis time. To this end an absolute file path needs to be provided to DIA-NN for each LC-MS file. `dms_dataset_path` assembles the paths for all files in a [DMS Data Package](https://prismwiki.pnl.gov/wiki/Data_Package). The function requires [`PNNL>DMS.utils`](https://github.com/PNNL-Comp-Mass-Spec/PNNL.DMS.utils) and access to PNNL network. 
+
+```{r}
+paths <-pnnl.diann.utils::dms_dataset_path(
+  data_package_num = 5293,
+  file_type = ".raw",
+  diann_console = TRUE
+  )
+
+
+paths[1:3,]
+
+
+```
+
+Note the outputs above are already formatted for the  [DIA-NN Console Command](https://github.com/vdemichev/DiaNN?tab=readme-ov-file#command-line-reference). They can then be saved (see below) and pasted into the *Console Commands* box on DIA-NN. Setting `diann_console = FALSE` will return the absolute LC-MS file paths only. 
+
+```{r, eval = FALSE}
+
+write_tsv(x = diann_raw_paths,
+          escape = "none",
+          col_names = FALSE, 
+          file = "DATA/PATH.txt")
+
+```
+
