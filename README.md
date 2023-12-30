@@ -13,6 +13,20 @@ with
 2. Assembling paths for analyzing files directly from DMS. 3.
 (in-progress) General workflow for *plexDIA* analysis.
 
+``` r
+knitr::include_graphics(path = "images/pnnl.diann.utils_workflow_DARK.png")
+```
+
+<div class="figure">
+
+<img src="images/pnnl.diann.utils_workflow_DARK.png" alt="Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`." width="100%" />
+<p class="caption">
+Overview of `pnnl.diann.utils` package workflow. Package functions are
+in `monospace`.
+</p>
+
+</div>
+
 ## Installation
 
 You can install the development version of pnnl.diann.utils from
