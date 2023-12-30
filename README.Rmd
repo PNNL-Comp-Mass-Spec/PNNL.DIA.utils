@@ -19,11 +19,12 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 The goal of pnnl.diann.utils is 
+
   1. A set of functions to analyze DIA-NN outputs and convert them to `MSnSet` objects for downstream analysis with [`MSnSet.utils`](https://github.com/PNNL-Comp-Mass-Spec/MSnSet.utils).
   2. Assembling paths for analyzing files directly from DMS.
   3. (in-progress) General workflow for *plexDIA* analysis. 
   
-```{r figh.width = 4, fig.cap = "Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`."}
+```{r , echo = FALSE, figh.width = 4, fig.cap = "Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`."}
 knitr::include_graphics(path = "images/pnnl.diann.utils_workflow_DARK.png")
 ```
 
