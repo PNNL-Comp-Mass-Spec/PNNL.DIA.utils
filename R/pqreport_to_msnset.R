@@ -1,5 +1,30 @@
 
 
+#' Helper function, makes matrix of expression values 
+#'
+#' @param df data.frame of DIA-NN pq_report
+#' @param id_header Precursor ID column header
+#' @param quantity_header Precursors Quantity Column
+#' @param sample_header Run/Sample header column
+#'
+#' @return Matrix of quantity_header with col_names = sample_header; row_names = precursor_id, 
+#'
+make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Name"){
+  
+  m <- df |>
+    dplyr::mutate({{quantity_header}} := dplyr::na_if(.data[[quantity_header]], 0),
+                  {{quantity_header}} := dplyr::na_if(.data[[quantity_header]], Inf)) |>
+    dplyr::select(all_of( c(id_header, quantity_header, sample_header))) |>
+    tidyr::pivot_wider(names_from = .data[[sample_header]], 
+                       values_from = .data[[quantity_header]]) |>
+    tibble::column_to_rownames(var = id_header) |>
+    as.matrix()
+  
+  m
+  
+}
+
+
 pqreport_to_msnset <- function(x,
                                id_header = "Precursor.Id",
                                quantity_header = "Precursor.Normalised",
@@ -33,23 +58,20 @@ pqreport_to_msnset <- function(x,
   is_duplicated = any(duplicated(paste0(df[["File.Name"]],":",df[[id_header]])))
 
   if (is_duplicated){
-  #  warning("Multiple quantities per id: the maximum of these will be calculated")
+    
+    warning("Multiple quantities per id: the maximum of these will be calculated")
 
-    m <- df |>
+    df <- df |>
       dplyr::group_by(File.Name, .data[[id_header]]) |>
       dplyr::slice_max(.data[[quantity_header]], n = 1) |>
-      dplyr::ungroup() |>
-      dplyr::mutate({{quantity_header}} := dplyr::na_if(.data[[quantity_header]], 0),
-                    {{quantity_header}} := dplyr::na_if(.data[[quantity_header]], Inf)) |>
-      select(.data[[id_header]], .data[[quantity_header]], File.Name) |>
-      tidyr::pivot_wider(names_from = File.Name, 
-                         values_from = .data[[quantity_header]]) |>
-      tibble::column_to_rownames(var = id_header) |>
-      as.matrix()
-  } else {
+      dplyr::ungroup()
+    }
     
-  }
-
-  #m
+    m <- df |>
+      make_esprs(id_header = {{id_header}},
+                 quantity_header = {{quantity_header}},
+                 sample_header = "File.Name")
+    
+  m
   
 }
