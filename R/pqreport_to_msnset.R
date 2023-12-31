@@ -27,7 +27,7 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 
 #' Converts DIA-NN precursor report to msnset object
 #'
-#' @param x precursor report read in with read into R
+#' @param x precursor report read into R
 #' @param id_header protein/peptide/precursor Id column name
 #' @param quantity_header quantity column name
 #' @param proteotypic_only only proteotypic peptides and the respective proteins should be considered
@@ -46,7 +46,7 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 #' @examples
 #' 
 #' x_path <- system.file("extdata",
-#'   "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv", 
+#'   "diann_report_tsv", 
 #'    package = "pnnl.diann.utils")
 #'    
 #' x <- read_diann_tsv(x) 

@@ -16,7 +16,7 @@ pqreport_to_msnset(
 )
 }
 \arguments{
-\item{x}{precursor report read in with read into R}
+\item{x}{precursor report read into R}
 
 \item{id_header}{protein/peptide/precursor Id column name}
 
@@ -41,7 +41,7 @@ Mirrors functionality of [`diann::diann_matrix()`](https://github.com/vdemichev/
 \examples{
 
 x_path <- system.file("extdata",
-  "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv", 
+  "diann_report_tsv", 
    package = "pnnl.diann.utils")
    
 x <- read_diann_tsv(x) 

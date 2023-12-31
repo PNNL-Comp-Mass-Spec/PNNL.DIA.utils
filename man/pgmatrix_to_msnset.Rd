@@ -4,10 +4,10 @@
 \alias{pgmatrix_to_msnset}
 \title{Converts DIA-NN matrix report to msnset object}
 \usage{
-pgmatrix_to_msnset(path, id_header = "Protein.Group")
+pgmatrix_to_msnset(x, id_header = "Protein.Group")
 }
 \arguments{
-\item{path}{Filepath to DIA-NN protein or gene group output file}
+\item{x}{protein groups matrix read  into R}
 
 \item{id_header}{Which matrix column to be used in fData slot rowname}
 }
@@ -19,9 +19,11 @@ Converts DIA-NN matrix report to msnset object
 }
 \examples{
 
-x <- system.file("extdata",
+x_path <- system.file("extdata",
   "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv", 
    package = "pnnl.diann.utils")
+   
+x <- read_diann_tsv(x) 
    
 pgmatrix_to_msnset(x)
 }
