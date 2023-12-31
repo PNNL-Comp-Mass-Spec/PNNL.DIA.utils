@@ -35,7 +35,7 @@ pqreport_to_msnset <- function(x,
                                gg_q = 1.0) {
 
   # to avoid notes on check()
-  Q.Value <- Protein.Q.Value <- PG.Q.Value <- GG.Q.Value <- File.Name <- NULL
+  Q.Value <- Protein.Q.Value <- PG.Q.Value <- GG.Q.Value <- NULL
   
   df <- as.data.frame(x)
 
@@ -58,7 +58,7 @@ pqreport_to_msnset <- function(x,
   is_duplicated = any(duplicated(paste0(df[["File.Name"]],":",df[[id_header]])))
 
   if (is_duplicated){
-    
+
     warning("Multiple quantities per id: the maximum of these will be calculated")
 
     df <- df |>
@@ -66,12 +66,45 @@ pqreport_to_msnset <- function(x,
       dplyr::slice_max(.data[[quantity_header]], n = 1) |>
       dplyr::ungroup()
     }
-    
-    m <- df |>
+
+  # Creating expression matrix for MSnSet
+  exprs <- df |>
       make_esprs(id_header = {{id_header}},
                  quantity_header = {{quantity_header}},
                  sample_header = "File.Name")
+
+  # fData 
     
-  m
-  
+    f_data_cols <- c("Protein.Group",
+                     "Protein.Ids",
+                     "Protein.Names",
+                     "Genes",
+                     "First.Protein.Description",
+                     id_header)
+    
+    f_data_temp <- df |>
+      dplyr::select(dplyr::any_of(f_data_cols)) |>
+      distinct()
+    
+    f_data <- data.frame(id_header = rownames(exprs)) |>
+      left_join(f_data_temp,
+                 by = c(id_header = id_header)) |>
+      tibble::column_to_rownames(var = "id_header")
+
+    # p_data
+
+    p_data <- data.frame(dataset = colnames(exprs)) |>
+      `rownames<-`(colnames(exprs))
+
+    # assemble msnset
+
+    m <- MSnbase::MSnSet(
+      exprs = exprs,
+      fData = f_data,
+      pData = p_data
+    )
+
+    m
+ 
+    
 }
