@@ -10,13 +10,13 @@
 #'
 #' @examples
 #' 
-#' x_path <- system.file("extdata",
+#' pg_path <- system.file("extdata",
 #'   "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv", 
 #'    package = "pnnl.diann.utils")
 #'    
-#' x <- read_diann_tsv(x) 
+#' pg <- read_diann_tsv(pg_path) 
 #'    
-#' pgmatrix_to_msnset(x)
+#' pgmatrix_to_msnset(pg)
 pgmatrix_to_msnset <- function(x, id_header = "Protein.Group"){
   
   df <- as.data.frame(x)

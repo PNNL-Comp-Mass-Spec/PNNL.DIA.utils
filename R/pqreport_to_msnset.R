@@ -14,7 +14,7 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
   m <- df |>
     dplyr::mutate({{quantity_header}} := dplyr::na_if(.data[[quantity_header]], 0),
                   {{quantity_header}} := dplyr::na_if(.data[[quantity_header]], Inf)) |>
-    dplyr::select(all_of( c(id_header, quantity_header, sample_header))) |>
+    dplyr::select(dplyr::all_of( c(id_header, quantity_header, sample_header))) |>
     tidyr::pivot_wider(names_from = .data[[sample_header]], 
                        values_from = .data[[quantity_header]]) |>
     tibble::column_to_rownames(var = id_header) |>
@@ -36,6 +36,8 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 #' @param pg_q protein group q-value threshold
 #' @param gg_q gene group q-value threshold
 #' 
+#' @importFrom rlang .data 
+#' 
 #' @description
 #' Mirrors functionality of [`diann::diann_matrix()`](https://github.com/vdemichev/diann-rpackage), but outputs an MSnSet object.
 #' 
@@ -45,13 +47,13 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 #'
 #' @examples
 #' 
-#' x_path <- system.file("extdata",
-#'   "diann_report_tsv", 
-#'    package = "pnnl.diann.utils")
-#'    
-#' x <- read_diann_tsv(x) 
-#'    
-#' pgmatrix_to_msnset(x)
+# x_path <- system.file("extdata",
+#   "diann_report.tsv",
+#    package = "pnnl.diann.utils")
+# 
+# x <- read_diann_tsv(x_path)
+# 
+# pqreport_to_msnset(x)
 pqreport_to_msnset <- function(x,
                                id_header = "Precursor.Id",
                                quantity_header = "Precursor.Normalised",
@@ -61,7 +63,7 @@ pqreport_to_msnset <- function(x,
                                pg_q = 1.0,
                                gg_q = 1.0) {
   # to avoid notes on check()
-  Q.Value <- Protein.Q.Value <- PG.Q.Value <- GG.Q.Value <- NULL
+  Q.Value <- Protein.Q.Value <- PG.Q.Value <- GG.Q.Value <- File.Name <- Proteotypic <-  NULL
 
   df <- as.data.frame(x)
 
@@ -113,10 +115,10 @@ pqreport_to_msnset <- function(x,
 
   f_data_temp <- df |>
     dplyr::select(dplyr::any_of(f_data_cols)) |>
-    distinct()
+    dplyr::distinct()
 
   f_data <- data.frame(id_header = rownames(exprs)) |>
-    left_join(f_data_temp,
+    dplyr::left_join(f_data_temp,
       by = c(id_header = id_header)
     ) |>
     tibble::column_to_rownames(var = "id_header")
