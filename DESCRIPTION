@@ -16,5 +16,6 @@ Imports:
     MSnbase,
     PNNL.DMS.utils,
     stringr,
-    tibble
+    tibble,
+    tidyr
 RoxygenNote: 7.2.3
