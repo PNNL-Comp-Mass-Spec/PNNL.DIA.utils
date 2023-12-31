@@ -25,6 +25,33 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 }
 
 
+#' Converts DIA-NN precursor report to msnset object
+#'
+#' @param x precursor report read in with read into R
+#' @param id_header protein/peptide/precursor Id column name
+#' @param quantity_header quantity column name
+#' @param proteotypic_only only proteotypic peptides and the respective proteins should be considered
+#' @param q q-value threshold
+#' @param protein_q uniquely identified protein q-value threshold
+#' @param pg_q protein group q-value threshold
+#' @param gg_q gene group q-value threshold
+#' 
+#' @description
+#' Mirrors functionality of [`diann::diann_matrix()`](https://github.com/vdemichev/diann-rpackage), but outputs an MSnSet object.
+#' 
+#'
+#' @return MSnSet object
+#' @export
+#'
+#' @examples
+#' 
+#' x_path <- system.file("extdata",
+#'   "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv", 
+#'    package = "pnnl.diann.utils")
+#'    
+#' x <- read_diann_tsv(x) 
+#'    
+#' pgmatrix_to_msnset(x)
 pqreport_to_msnset <- function(x,
                                id_header = "Precursor.Id",
                                quantity_header = "Precursor.Normalised",
@@ -33,15 +60,14 @@ pqreport_to_msnset <- function(x,
                                protein_q = 1.0,
                                pg_q = 1.0,
                                gg_q = 1.0) {
-
   # to avoid notes on check()
   Q.Value <- Protein.Q.Value <- PG.Q.Value <- GG.Q.Value <- NULL
-  
+
   df <- as.data.frame(x)
 
   # Filtering df based on provided cut-offs
 
-  if(proteotypic_only){
+  if (proteotypic_only) {
     df <- df |>
       dplyr::filter(Proteotypic != 0)
   }
@@ -55,56 +81,58 @@ pqreport_to_msnset <- function(x,
     dplyr::filter(GG.Q.Value <= gg_q)
 
   # checking for duplicate precursors in ind. runs.
-  is_duplicated = any(duplicated(paste0(df[["File.Name"]],":",df[[id_header]])))
+  is_duplicated <- any(duplicated(paste0(df[["File.Name"]], ":", df[[id_header]])))
 
-  if (is_duplicated){
-
+  if (is_duplicated) {
     warning("Multiple quantities per id: the maximum of these will be calculated")
 
     df <- df |>
       dplyr::group_by(File.Name, .data[[id_header]]) |>
       dplyr::slice_max(.data[[quantity_header]], n = 1) |>
       dplyr::ungroup()
-    }
+  }
 
   # Creating expression matrix for MSnSet
   exprs <- df |>
-      make_esprs(id_header = {{id_header}},
-                 quantity_header = {{quantity_header}},
-                 sample_header = "File.Name")
-
-  # fData 
-    
-    f_data_cols <- c("Protein.Group",
-                     "Protein.Ids",
-                     "Protein.Names",
-                     "Genes",
-                     "First.Protein.Description",
-                     id_header)
-    
-    f_data_temp <- df |>
-      dplyr::select(dplyr::any_of(f_data_cols)) |>
-      distinct()
-    
-    f_data <- data.frame(id_header = rownames(exprs)) |>
-      left_join(f_data_temp,
-                 by = c(id_header = id_header)) |>
-      tibble::column_to_rownames(var = "id_header")
-
-    # p_data
-
-    p_data <- data.frame(dataset = colnames(exprs)) |>
-      `rownames<-`(colnames(exprs))
-
-    # assemble msnset
-
-    m <- MSnbase::MSnSet(
-      exprs = exprs,
-      fData = f_data,
-      pData = p_data
+    make_esprs(
+      id_header = {{ id_header }},
+      quantity_header = {{ quantity_header }},
+      sample_header = "File.Name"
     )
 
-    m
- 
-    
+  # fData
+
+  f_data_cols <- c(
+    "Protein.Group",
+    "Protein.Ids",
+    "Protein.Names",
+    "Genes",
+    "First.Protein.Description",
+    id_header
+  )
+
+  f_data_temp <- df |>
+    dplyr::select(dplyr::any_of(f_data_cols)) |>
+    distinct()
+
+  f_data <- data.frame(id_header = rownames(exprs)) |>
+    left_join(f_data_temp,
+      by = c(id_header = id_header)
+    ) |>
+    tibble::column_to_rownames(var = "id_header")
+
+  # p_data
+
+  p_data <- data.frame(dataset = colnames(exprs)) |>
+    `rownames<-`(colnames(exprs))
+
+  # assemble msnset
+
+  m <- MSnbase::MSnSet(
+    exprs = exprs,
+    fData = f_data,
+    pData = p_data
+  )
+
+  m
 }

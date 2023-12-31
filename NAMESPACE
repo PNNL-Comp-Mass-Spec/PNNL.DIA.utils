@@ -2,4 +2,5 @@
 
 export(dms_dataset_path)
 export(pgmatrix_to_msnset)
+export(pqreport_to_msnset)
 export(read_diann_tsv)
