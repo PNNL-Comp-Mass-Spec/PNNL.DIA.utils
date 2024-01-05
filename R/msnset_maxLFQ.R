@@ -10,6 +10,13 @@
 #'
 #' 
 msnset_maxLFQ <- function(m){
+  # To DO 
+  
+  # output msnset object at protein level
+  # make function good for gene level roll up as well
+  # check for missing protein group info (could be general msnset function)
+  # pipeline for msnset normalization 
+  
   
   ls <- MSnbase::exprs(m) |>
     as.data.frame() |>
