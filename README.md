@@ -16,7 +16,7 @@ The goal of pnnl.diann.utils is
 
 <div class="figure">
 
-<img src="images/pnnl.diann.utils_workflow_DARK.png" alt="Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`." width="100%" />
+<img src="man/figures/README-/pnnl.diann.utils_workflow_DARK.png" alt="Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`." width="100%" />
 <p class="caption">
 Overview of `pnnl.diann.utils` package workflow. Package functions are
 in `monospace`.

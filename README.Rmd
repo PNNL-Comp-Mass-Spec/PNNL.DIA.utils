@@ -24,8 +24,8 @@ The goal of pnnl.diann.utils is
   2. Assembling paths for analyzing files directly from DMS.
   3. (in-progress) General workflow for *plexDIA* analysis. 
   
-```{r , echo = FALSE, figh.width = 4, fig.cap = "Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`."}
-knitr::include_graphics(path = "images/pnnl.diann.utils_workflow_DARK.png")
+```{r , echo = FALSE, fig.width = 4, fig.cap = "Overview of `pnnl.diann.utils` package workflow. Package functions are in `monospace`."}
+knitr::include_graphics(path = "man/figures/README-/pnnl.diann.utils_workflow_DARK.png")
 ```
 
 ## Installation
