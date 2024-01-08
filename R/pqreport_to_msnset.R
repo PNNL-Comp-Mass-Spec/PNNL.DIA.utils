@@ -106,7 +106,7 @@ pqreport_to_msnset <- function(x,
 
   f_data_cols <- c(
     "Protein.Group",
-    "Protein.Ids",
+    #"Protein.Ids", # Dropping b/c not useful and messes order of protein.group
     "Protein.Names",
     "Genes",
     "First.Protein.Description",
