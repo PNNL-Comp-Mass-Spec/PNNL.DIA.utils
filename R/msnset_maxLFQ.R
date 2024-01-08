@@ -9,20 +9,16 @@
 #' @export
 #'
 #' 
-msnset_maxLFQ <- function(m){
+msnset_maxLFQ <- function(m, level = "Protein.Group"){
   # To DO 
-  
-  # output msnset object at protein level
-  # make function good for gene level roll up as well
   # check for missing protein group info (could be general msnset function)
   # pipeline for msnset normalization 
-  
   
   ls <- MSnbase::exprs(m) |>
     as.data.frame() |>
     tibble::rownames_to_column(var= "id") |>
-    cbind(MSnbase::fData(m)[, "Protein.Group"]) |>
-    dplyr::rename("protein_list" = `MSnbase::fData(m)[, "Protein.Group"]`) |>
+    cbind(MSnbase::fData(m)[, level]) |>
+    dplyr::rename("protein_list" = `MSnbase::fData(m)[, level]`) |>
     dplyr::filter(protein_list != "") |>
     tidyr::pivot_longer(cols = -c(protein_list, id), 
                         names_to = "sample_list", 
@@ -42,11 +38,11 @@ msnset_maxLFQ <- function(m){
   id_new <- rownames(exprs_new) 
   
   fData_new <- MSnbase::fData(m) |>
-    dplyr::filter(Protein.Group %in% id_new) |>
+    dplyr::filter(.data[[level]] %in% id_new) |>
     dplyr::distinct() |>
     as.data.frame() |>
     `rownames<-`(NULL) |>
-    tibble::column_to_rownames(var = "Protein.Group")
+    tibble::column_to_rownames(var = level)
   
   # new msnset
   
