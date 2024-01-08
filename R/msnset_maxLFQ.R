@@ -31,9 +31,31 @@ msnset_maxLFQ <- function(m){
     dplyr::mutate(quant = log2(quant)) |>
     as.list()
   
-  ls_maxlfq <- iq::fast_MaxLFQ(ls)
   
-  ls
+  # MaxLFQ exprs matrix
+  ls_maxlfq <- iq::fast_MaxLFQ(ls) 
   
+  exprs_new <- ls_maxlfq[["estimate"]]
+  
+  # New fData based on MaxLFQ level
+  
+  id_new <- rownames(exprs_new) 
+  
+  fData_new <- MSnbase::fData(m) |>
+    dplyr::filter(Protein.Group %in% id_new) |>
+    dplyr::distinct() |>
+    as.data.frame() |>
+    `rownames<-`(NULL) |>
+    tibble::column_to_rownames(var = "Protein.Group")
+  
+  # new msnset
+  
+  msnset_new <- MSnbase::MSnSet(
+    exprs = as.matrix(exprs_new), 
+    fData = fData_new, 
+    pData = MSnbase::pData(m)
+  )
+  
+  msnset_new
 }
 
