@@ -4,15 +4,21 @@
 #' MaxLFQ quantites of precursors in msnset
 #'
 #' @param m DIA-NN precursors report as MSnSet from `pqreport_to_msnset()`
-#'
+#' @param level Level to perform MaxLFQ, either "Protein.Group" or "Genes"
 #' @return list of maxLFQ intensities
 #' @export
 #'
 #' 
-msnset_maxLFQ <- function(m, level = "Protein.Group"){
+msnset_maxLFQ <- function(m, level = c("Protein.Group", "Genes")){
   # To DO 
   # check for missing protein group info (could be general msnset function)
   # pipeline for msnset normalization 
+  
+  # to pass R CMD CHECK
+  
+  `MSnbase::fData(m)[, level]` <- `protein_list` <- `id` <- `quant` <- File.Name <- NULL 
+  
+  level <- match.arg(level)
   
   ls <- MSnbase::exprs(m) |>
     as.data.frame() |>
