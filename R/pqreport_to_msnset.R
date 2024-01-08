@@ -47,13 +47,13 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 #'
 #' @examples
 #' 
-# x_path <- system.file("extdata",
-#   "diann_report.tsv",
-#    package = "pnnl.diann.utils")
-# 
-# x <- read_diann_tsv(x_path)
-# 
-# pqreport_to_msnset(x)
+#' x_path <- system.file("extdata",
+#'   "diann_report.tsv",
+#'    package = "pnnl.diann.utils")
+#' 
+#' x <- read_diann_tsv(x_path)
+#' 
+#' pqreport_to_msnset(x)
 pqreport_to_msnset <- function(x,
                                id_header = "Precursor.Id",
                                quantity_header = "Precursor.Normalised",

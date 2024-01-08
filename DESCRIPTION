@@ -12,12 +12,12 @@ LazyData: true
 Imports: 
     data.table,
     dplyr,
+    fs,
     iq,
     MSnbase,
     PNNL.DMS.utils,
     rlang,
     stringr,
     tibble,
-    tidyr,
-    utils
+    tidyr 
 RoxygenNote: 7.2.3

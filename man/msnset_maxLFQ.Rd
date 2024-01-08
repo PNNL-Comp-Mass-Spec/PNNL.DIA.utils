@@ -4,10 +4,12 @@
 \alias{msnset_maxLFQ}
 \title{MaxLFQ quantites of precursors in msnset}
 \usage{
-msnset_maxLFQ(m)
+msnset_maxLFQ(m, level = c("Protein.Group", "Genes"))
 }
 \arguments{
 \item{m}{DIA-NN precursors report as MSnSet from `pqreport_to_msnset()`}
+
+\item{level}{Level to perform MaxLFQ, either "Protein.Group" or "Genes"}
 }
 \value{
 list of maxLFQ intensities

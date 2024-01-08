@@ -38,3 +38,13 @@ MSnSet object
 \description{
 Mirrors functionality of [`diann::diann_matrix()`](https://github.com/vdemichev/diann-rpackage), but outputs an MSnSet object.
 }
+\examples{
+
+x_path <- system.file("extdata",
+  "diann_report.tsv",
+   package = "pnnl.diann.utils")
+
+x <- read_diann_tsv(x_path)
+
+pqreport_to_msnset(x)
+}

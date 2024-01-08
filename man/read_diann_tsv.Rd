@@ -4,10 +4,18 @@
 \alias{read_diann_tsv}
 \title{Reads DIA-NN `.tsv` output files}
 \usage{
-read_diann_tsv(path)
+read_diann_tsv(path, basename = FALSE, ...)
 }
 \arguments{
 \item{path}{Filepath to DIA-NN `.tsv` output file}
+
+\item{basename}{`T` or `F` to apply `sample_basename()`}
+
+\item{...}{
+  Arguments passed on to \code{\link[=sample_basename]{sample_basename}}
+  \describe{
+    \item{\code{drop_ext}}{Options to drop file extensions: "no", "last", "all", see Details}
+  }}
 }
 \value{
 A data frame
@@ -15,7 +23,13 @@ A data frame
 \description{
 Reads DIA-NN `.tsv` output files
 }
+\details{
+DIA-NN, whether a *pq_report* or *pg*/*gg* matrix applies full path names to samples.
+The option `basename` applies the function `sample_basename` to either the `File.Names` 
+column for *pq_reports* or the headers for *pg*/*gg* matrices.
+}
 \examples{
 x <- system.file("extdata", "diann_report.tsv", package = "pnnl.diann.utils")
-read_diann_tsv(x)
+read_diann_tsv(x, basename = TRUE, drop_ext = "all")
+
 }
