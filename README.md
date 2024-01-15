@@ -87,7 +87,7 @@ DIA-NN for each LC-MS file. `dms_dataset_path` assembles the paths for
 all files in a [DMS Data
 Package](https://prismwiki.pnl.gov/wiki/Data_Package). The function
 requires
-[`PNNL>DMS.utils`](https://github.com/PNNL-Comp-Mass-Spec/PNNL.DMS.utils)
+[`PNNL.DMS.utils`](https://github.com/PNNL-Comp-Mass-Spec/PNNL.DMS.utils)
 and access to PNNL network.
 
 ``` r
