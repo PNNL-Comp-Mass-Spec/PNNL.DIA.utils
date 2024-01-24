@@ -12,7 +12,8 @@ pqreport_to_msnset(
   q = 0.01,
   protein_q = 1,
   pg_q = 1,
-  gg_q = 1
+  gg_q = 1,
+  strip_fData = FALSE
 )
 }
 \arguments{
@@ -31,12 +32,22 @@ pqreport_to_msnset(
 \item{pg_q}{protein group q-value threshold}
 
 \item{gg_q}{gene group q-value threshold}
+
+\item{strip_fData}{TRUE will remove all fData except for id_header, FALSE will attempt to keep protein meta info from DIA-NN.}
 }
 \value{
 MSnSet object
 }
 \description{
 Mirrors functionality of [`diann::diann_matrix()`](https://github.com/vdemichev/diann-rpackage), but outputs an MSnSet object.
+
+If you have multiple DIA-NN precursor reports that you've combined into one 
+i.e. `cbind (pq_report1, pq_report2)`) and you want to convert that into one `msnset` object, 
+set `strip_fData = TRUE` to remove protein and gene group info columns from the fData slot to avoid errors
+when going from the *long* precursor report to the *wide* msnset. Errors emanate from disparities in
+protein group assignment for a given precursor in the report. For ex. *precA* in *run 1* could be assigned
+to *protein group X*, whereas the same *precA* in *run 2* could be assigned to *protein groups X; Y*. 
+When comparing these types of samples, bet set `strip_fData = FALSE` and compare at the precursor level only.
 }
 \examples{
 

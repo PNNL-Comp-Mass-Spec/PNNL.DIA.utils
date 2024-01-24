@@ -35,12 +35,20 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 #' @param protein_q uniquely identified protein q-value threshold
 #' @param pg_q protein group q-value threshold
 #' @param gg_q gene group q-value threshold
+#' @param strip_fData TRUE will remove all fData except for id_header, FALSE will attempt to keep protein meta info from DIA-NN. 
 #' 
 #' @importFrom rlang .data 
 #' 
 #' @description
 #' Mirrors functionality of [`diann::diann_matrix()`](https://github.com/vdemichev/diann-rpackage), but outputs an MSnSet object.
 #' 
+#' If you have multiple DIA-NN precursor reports that you've combined into one 
+#' i.e. `cbind (pq_report1, pq_report2)`) and you want to convert that into one `msnset` object, 
+#' set `strip_fData = TRUE` to remove protein and gene group info columns from the fData slot to avoid errors
+#' when going from the *long* precursor report to the *wide* msnset. Errors emanate from disparities in
+#' protein group assignment for a given precursor in the report. For ex. *precA* in *run 1* could be assigned
+#' to *protein group X*, whereas the same *precA* in *run 2* could be assigned to *protein groups X; Y*. 
+#' When comparing these types of samples, bet set `strip_fData = FALSE` and compare at the precursor level only. 
 #'
 #' @return MSnSet object
 #' @export
@@ -61,7 +69,8 @@ pqreport_to_msnset <- function(x,
                                q = 0.01,
                                protein_q = 1.0,
                                pg_q = 1.0,
-                               gg_q = 1.0) {
+                               gg_q = 1.0,
+                               strip_fData = FALSE) {
   # to avoid notes on check()
   Q.Value <- Protein.Q.Value <- PG.Q.Value <- GG.Q.Value <- File.Name <- Proteotypic <-  NULL
 
@@ -104,24 +113,38 @@ pqreport_to_msnset <- function(x,
 
   # fData
 
-  f_data_cols <- c(
-    "Protein.Group",
-    #"Protein.Ids", # Dropping b/c not useful and messes order of protein.group
-    "Protein.Names",
-    "Genes",
-    "First.Protein.Description",
-    id_header
-  )
-
-  f_data_temp <- df |>
-    dplyr::select(dplyr::any_of(f_data_cols)) |>
-    dplyr::distinct()
-
-  f_data <- data.frame(id_header = rownames(exprs)) |>
-    dplyr::left_join(f_data_temp,
+  if(strip_fData == TRUE){
+    
+    # fData empty except for rownames matching those in exprs
+    
+    f_data <- data.frame(id_header = rownames(exprs)) |>
+      tibble::column_to_rownames(var = "id_header")
+    
+  } else {
+    
+    # fData will contain protein group info from DIA-NN report. 
+    
+    f_data_cols <- c(
+      "Protein.Group",
+      #"Protein.Ids", # Dropping b/c not useful and messes order of protein.group
+      "Protein.Names",
+      "Genes",
+      "First.Protein.Description",
+      id_header
+      )
+    
+    f_data_temp <- df |>
+      dplyr::select(dplyr::any_of(f_data_cols)) |>
+      dplyr::distinct()
+    
+    f_data <- data.frame(id_header = rownames(exprs)) |>
+      dplyr::left_join(f_data_temp,
       by = c(id_header = id_header)
-    ) |>
-    tibble::column_to_rownames(var = "id_header")
+      ) |>
+      tibble::column_to_rownames(var = "id_header")
+  
+    
+    }  
 
   # p_data
 
