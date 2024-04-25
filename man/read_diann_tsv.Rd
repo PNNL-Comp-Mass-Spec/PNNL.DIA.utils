@@ -29,7 +29,7 @@ The option `basename` applies the function `sample_basename` to either the `File
 column for *pq_reports* or the headers for *pg*/*gg* matrices.
 }
 \examples{
-x <- system.file("extdata", "diann_report.tsv", package = "pnnl.diann.utils")
+x <- system.file("extdata", "diann_report.tsv", package = "PNNL.DIA.utils")
 read_diann_tsv(x, basename = TRUE, drop_ext = "all")
 
 }

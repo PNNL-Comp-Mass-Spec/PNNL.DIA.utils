@@ -53,7 +53,7 @@ When comparing these types of samples, bet set `strip_fData = FALSE` and compare
 
 x_path <- system.file("extdata",
   "diann_report.tsv",
-   package = "pnnl.diann.utils")
+   package = "PNNL.DIA.utils")
 
 x <- read_diann_tsv(x_path)
 

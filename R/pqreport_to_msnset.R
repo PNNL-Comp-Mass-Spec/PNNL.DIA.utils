@@ -57,7 +57,7 @@ make_esprs <- function(df, id_header, quantity_header, sample_header = "File.Nam
 #' 
 #' x_path <- system.file("extdata",
 #'   "diann_report.tsv",
-#'    package = "pnnl.diann.utils")
+#'    package = "PNNL.DIA.utils")
 #' 
 #' x <- read_diann_tsv(x_path)
 #' 

@@ -12,7 +12,7 @@
 #' 
 #' pg_path <- system.file("extdata",
 #'   "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv", 
-#'    package = "pnnl.diann.utils")
+#'    package = "PNNL.DIA.utils")
 #'    
 #' pg <- read_diann_tsv(pg_path) 
 #'    

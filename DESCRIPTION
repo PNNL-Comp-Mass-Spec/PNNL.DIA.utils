@@ -1,10 +1,10 @@
-Package: pnnl.diann.utils
+Package: PNNL.DIA.utils
 Type: Package
-Title: Misc. Helpers For Working With DIA-NN at PNNL
+Title: Misc. Helpers For Working With DIA proteomics data at PNNL
 Version: 0.1.0
 Author: David Ross Hall and Vladislav Petyuk
 Maintainer: David Ross Hall <david.hall@pnnl.gov>
-Description: Misc. helpers for working with DIA-NN at PNNL.
+Description: Misc. helpers for working with DIA proteomics data at PNNL.
     Will eventually have plexDIA support. 
 License: MIT + file LICENSE
 Encoding: UTF-8
