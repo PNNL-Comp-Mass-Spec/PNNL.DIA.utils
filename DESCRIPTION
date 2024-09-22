@@ -15,7 +15,6 @@ Imports:
     fs,
     iq,
     MSnbase,
-    PNNL.DMS.utils,
     rlang,
     stringr,
     tibble,
