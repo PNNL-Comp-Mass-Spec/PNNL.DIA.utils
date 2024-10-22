@@ -31,7 +31,7 @@ You can install the development version of pnnl.diann.utils from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("PNNL-Comp-Mass-Spec/DIANN.utils")
+devtools::install_github("PNNL-Comp-Mass-Spec/PNNL.DIA.utils")
 ```
 
 ## Example datasets
