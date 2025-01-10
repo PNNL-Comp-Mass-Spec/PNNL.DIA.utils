@@ -18,7 +18,7 @@ basename of LC-MS file path, drops file extension
 Get Basename from Sample LC-MS file path
 }
 \details{
-`drop_ext` specifies whether to drop file extensions. Default option is `"no"`, which keeps file exteions; 
+`drop_ext` specifies whether to drop file extensions. Default option is `"no"`, which keeps file extensions; 
 `"last"` removes only the last extension, and `"all"` removes  everything after the first period (`.`); this isn't a problem 
 if using data from DMS as periods are not allowed in dataset names 
 (see [DMS Dataset Naming Conventions](https://prismwiki.pnl.gov/wiki/Dataset#DMS_Dataset_Naming_Conventions));
