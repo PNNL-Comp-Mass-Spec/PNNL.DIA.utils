@@ -2,6 +2,7 @@
 
 export(msnset_maxLFQ)
 export(num_to_wellplate)
+export(parse_diann_commands)
 export(pgmatrix_to_msnset)
 export(pqreport_to_msnset)
 export(read_diann_parquet)
@@ -10,3 +11,4 @@ export(sample_basename)
 export(wellplate_to_num)
 importFrom(rlang,":=")
 importFrom(rlang,.data)
+importFrom(utils,read.table)
