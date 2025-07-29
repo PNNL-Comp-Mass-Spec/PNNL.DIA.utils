@@ -36,10 +36,6 @@
 #' }
 #'
 #' @export
-#' 
-# Suppress R CMD check notes for variables used in dplyr operations
-utils::globalVariables(c("success", "output_size_MB", "input_size_MB", 
-                         "size_ratio", "error_message", "input_file"))
 
 get_raw_files_from_data_package <- function(data_package_num) {
   # Get all datasets in the package

@@ -5,7 +5,13 @@
 #' @param x protein groups matrix read  into R
 #' @param id_header Which matrix column to be used in fData slot rowname
 #'
+#' @importFrom dplyr select any_of rename_with
+#' @importFrom tibble column_to_rownames
+#' @importFrom stringr str_remove_all
+#' @importFrom MSnbase MSnSet
+#' 
 #' @return MSnSet object 
+#' 
 #' @export
 #'
 #' @examples
