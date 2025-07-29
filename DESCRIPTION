@@ -5,7 +5,6 @@ Version: 0.1.0
 Author: David Ross Hall and Vladislav Petyuk
 Maintainer: David Ross Hall <david.hall@pnnl.gov>
 Description: Misc. helpers for working with DIA proteomics data at PNNL.
-    Will eventually have plexDIA support. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -13,9 +12,11 @@ Imports:
     arrow,
     data.table,
     dplyr,
+    PNNL.DMS.utils,
     fs,
     iq,
     MSnbase,
+    readr,
     rlang,
     stringr,
     tibble,

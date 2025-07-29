@@ -6,6 +6,6 @@
 \alias{PNNL.DIA.utils-package}
 \title{PNNL.DIA.utils: Misc. Helpers For Working With DIA proteomics data at PNNL}
 \description{
-Misc. helpers for working with DIA proteomics data at PNNL. Will eventually have plexDIA support.
+Misc. helpers for working with DIA proteomics data at PNNL.
 }
 \keyword{internal}
