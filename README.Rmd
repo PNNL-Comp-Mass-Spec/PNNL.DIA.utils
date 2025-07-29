@@ -13,14 +13,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pnnl.diann.utils
+# PNNL.DIA.utils
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of pnnl.diann.utils is 
+The goal of *PNNL.DIA.utils* is 
 
-  1. A set of functions to analyze DIA-NN outputs and convert them to `MSnSet` objects for downstream analysis with [`MSnSet.utils`](https://github.com/PNNL-Comp-Mass-Spec/MSnSet.utils).
+  1. A set of functions to analyze DIA-NN  and Spectronaut outputs and convert them to `MSnSet` objects for downstream analysis with [`MSnSet.utils`](https://github.com/PNNL-Comp-Mass-Spec/MSnSet.utils).
   2. Assembling paths for analyzing files directly from DMS.
   3. (in-progress) General workflow for *plexDIA* analysis. 
   
@@ -30,11 +30,11 @@ knitr::include_graphics(path = "man/figures/README-/pnnl.diann.utils_workflow_DA
 
 ## Installation
 
-You can install the development version of pnnl.diann.utils from [GitHub](https://github.com/) with:
+You can install the development version of [`PNNL.DIA.utils` from GitHub](https://github.com/PNNL-Comp-Mass-Spec/PNNL.DIA.utils) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("PNNL-Comp-Mass-Spec/DIANN.utils")
+devtools::install_github("PNNL-Comp-Mass-Spec/PNNL.DIA.utils")
 ```
 
 ## Example datasets
@@ -49,23 +49,23 @@ Example gene group (*gg*) and protein group (*pg*) matrices, and precursors (*pq
 ## Converting Protein Groups Matrix to `MSnSet`
 
 
-```{r example, warning = FALSE, message = FALSE, error = FALSE}
-library(pnnl.diann.utils)
+```{r example, eval = FALSE, warning = FALSE, message = FALSE, error = FALSE}
+library(PNNL.DIA.utils)
 
 
 pg_matrix_path <- system.file("extdata",
                               "QC_Mam_19_01_b_DIA_report.pg_matrix.tsv",
-                              package = "pnnl.diann.utils")
+                              package = "PNNL.DIA.utils")
 
 
-pnnl.diann.utils::pgmatrix_to_msnset(pg_matrix_path)
+PNNL.DIA.utils::pgmatrix_to_msnset(pg_matrix_path)
 ```
 ## Assembling file paths from Data Package number
 
 While running DIA-NN from `kaiju` or other PNNL servers, DIA-NN can pull files directly from DMS, saving time and redundancy incurred from copying LC-MS files over with a minimal impact on overall DIA-NN analysis time. To this end an absolute file path needs to be provided to DIA-NN for each LC-MS file. `dms_dataset_path` assembles the paths for all files in a [DMS Data Package](https://prismwiki.pnl.gov/wiki/Data_Package). The function requires [`PNNL>DMS.utils`](https://github.com/PNNL-Comp-Mass-Spec/PNNL.DMS.utils) and access to PNNL network. 
 
 ```{r}
-paths <-pnnl.diann.utils::dms_dataset_path(
+paths <-PNNL.DIA.utils::dms_dataset_path(
   data_package_num = 5293,
   file_type = ".raw",
   diann_console = TRUE
@@ -88,3 +88,24 @@ write_tsv(x = diann_raw_paths,
 
 ```
 
+## Converting to .htrms on the fly
+
+*Spectronaut* suggest converting LC-MS files to it's proprietary `.htrms` file format to decrease analysis time. Rather then first download local `.raw` LC-MS files then convert, `dms_to_htrms.R` fetches the `.raw` files lsited in a data package from DMS and converts them on-the-fly to local `.htrms` copies.
+
+Note to run this function you need to have a local version of [Spectronaut's *HTRMS Converter*](https://biognosys.com/resources/spectronaut-tutorial-how-to-speed-up-your-spectronaut-analysis-with-htrms-conversion/). 
+
+The example below is how to run this on `KAIJU`.
+
+```{r, eval = FALSE}
+#' # Path to the HTRMSConverter.exe
+#' # This is the local path on KAIJU
+#' converter_path <- "C:/Program Files (x86)/Biognosys/HTRMS Converter/HTRMSConverter.exe"
+#' 
+#' # Convert a data package
+#' results <- convert_data_package_to_htrms(
+#'    data_package_num = 6447, 
+#'    output_folder = "E:/Data/Converted_Files",
+#'    converter_path = converter_path,
+#'    delay_seconds = 5
+#' )
+#' }
