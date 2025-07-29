@@ -75,16 +75,15 @@ Converter*](https://biognosys.com/resources/spectronaut-tutorial-how-to-speed-up
 The example below is how to run this on `KAIJU`.
 
 ``` r
-#' # Path to the HTRMSConverter.exe
-#' # This is the local path on KAIJU
-#' converter_path <- "C:/Program Files (x86)/Biognosys/HTRMS Converter/HTRMSConverter.exe"
-#' 
-#' # Convert a data package
-#' results <- convert_data_package_to_htrms(
-#'    data_package_num = 6447, 
-#'    output_folder = "E:/Data/Converted_Files",
-#'    converter_path = converter_path,
-#'    delay_seconds = 5
-#' )
-#' }
+# Path to the HTRMSConverter.exe
+# This is the local path on KAIJU
+# converter_path <- "C:/Program Files (x86)/Biognosys/HTRMS Converter/HTRMSConverter.exe"
+ 
+# Convert a data package
+results <- convert_data_package_to_htrms(
+   data_package_num = 6447, 
+   output_folder = "E:/Data/Converted_Files",
+   converter_path = converter_path,
+   delay_seconds = 5
+)
 ```
