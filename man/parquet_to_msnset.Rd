@@ -7,7 +7,7 @@
 parquet_to_msnset(pqt)
 }
 \arguments{
-\item{data.frame}{output from `read_diann_parquet()`}
+\item{pqt}{output from `read_diann_parquet()`}
 }
 \value{
 MSnSet object
