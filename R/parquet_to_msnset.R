@@ -60,7 +60,7 @@ parquet_to_msnset <- function(pqt){
   fData(m)$total_int <- rowSums(exprs(m), na.rm = TRUE)
   
   # filter out columns from fData that are complete NAs
-  idx <- fData(m) %>% map(is.na) %>% map(all) %>% map_lgl(`!`)
+  idx <- fData(m) |> map(is.na) |> map(all) |> map_lgl(`!`)
   fData(m) <- fData(m)[,idx]
   
   return(m)
