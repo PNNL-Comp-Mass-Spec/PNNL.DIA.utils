@@ -52,7 +52,7 @@ parquet_to_msnset <- function(pqt){
   x_data <- as.matrix(x_data)
   rownames(x_data) <- rownames(f_data)
   
-  p_data <- data.frame(Dataset = colnames(x_data), 
+  p_data <- data.frame(dataset = colnames(x_data), 
                        row.names = colnames(x_data))
   
   m <- MSnSet(exprs = x_data, fData = f_data, pData = p_data)
