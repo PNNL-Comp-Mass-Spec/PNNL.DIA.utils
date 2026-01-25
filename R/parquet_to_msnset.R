@@ -6,7 +6,7 @@
 #' @return MSnSet object
 #' 
 #' @details
-#' At this point it return only precurso (pq) type MSnSet. The only additional
+#' At this point it return only precursor (pq) type MSnSet. The only additional
 #' piece of data is iRT - normalized retention time of a peptide/precursor.
 #'
 #' @importFrom tidyr pivot_wider
