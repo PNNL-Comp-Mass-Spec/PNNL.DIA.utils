@@ -1,7 +1,7 @@
 
 #' Converts Parquet table to MSnSet
 #'
-#' @param data.frame output from `read_diann_parquet()`
+#' @param pqt output from `read_diann_parquet()`
 #'
 #' @return MSnSet object
 #' 
