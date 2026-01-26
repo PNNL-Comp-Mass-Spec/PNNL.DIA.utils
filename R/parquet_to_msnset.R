@@ -57,7 +57,7 @@ parquet_to_msnset <- function(pqt){
   p_data <- data.frame(dataset = colnames(x_data), 
                        row.names = colnames(x_data))
   
-  m <- MSnSet(exprs = x_data, fData = f_data, pData = p_data)
+  m <- MSnbase::MSnSet(exprs = x_data, fData = f_data, pData = p_data)
   
   fData(m)$total_int <- rowSums(exprs(m), na.rm = TRUE)
   
