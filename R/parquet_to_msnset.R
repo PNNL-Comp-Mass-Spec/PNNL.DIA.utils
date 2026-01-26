@@ -10,8 +10,10 @@
 #' piece of data is iRT - normalized retention time of a peptide/precursor.
 #'
 #' @importFrom tidyr pivot_wider
+#' @importFrom dplyr any_of
 #' @importFrom Biobase exprs fData `fData<-`
 #' @importFrom purrr map map_lgl
+#' @importFrom MSnbase MSnSet
 #'
 #' @export
 #'
