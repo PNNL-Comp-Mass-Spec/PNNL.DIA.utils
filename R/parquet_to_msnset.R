@@ -37,8 +37,8 @@ parquet_to_msnset <- function(pqt){
                    "Precursor.Id",
                    "iRT")
   
-  x <- pivot_wider(pqt, names_from = Run, values_from = Precursor.Normalised,
-                   id_cols = any_of(f_data_cols))
+  x <- tidyr::pivot_wider(pqt, names_from = Run, values_from = Precursor.Normalised,
+                   id_cols = dplyr::any_of(f_data_cols))
   
   f_data <- as.data.frame(x[,f_data_cols])
   # temporarily we'll use Precursor.Id as feature names
