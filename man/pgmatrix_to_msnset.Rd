@@ -4,10 +4,14 @@
 \alias{pgmatrix_to_msnset}
 \title{Converts DIA-NN matrix report to msnset object}
 \usage{
-pgmatrix_to_msnset(x, id_header = "Protein.Group")
+pgmatrix_to_msnset(x, sample_tag = "raw", id_header = "Protein.Group")
 }
 \arguments{
 \item{x}{protein groups matrix read  into R}
+
+\item{sample_tag}{Either a substring matching sample names, 
+can be a vector of multiple substrings or vector of sample names.
+For now the default is "raw" meaning that the datasets are Thermo raw files.}
 
 \item{id_header}{Which matrix column to be used in fData slot rowname}
 }
